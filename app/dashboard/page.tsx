@@ -299,7 +299,7 @@ export default function DashboardPage() {
               </CardContent>
 
               {hoveredBar !== null && barData[hoveredBar] && (
-                <Card className="absolute right-6 top-20 w-96 shadow-xl z-10 border-2">
+                <Card className="absolute inset-x-4 bottom-4 w-auto shadow-xl z-10 border-2 pointer-events-none bg-background/95">
                   <CardHeader>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">

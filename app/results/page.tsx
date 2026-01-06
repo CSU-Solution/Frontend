@@ -149,71 +149,75 @@ export default function ResultsPage() {
             </div>
           )}
 
-          <div className="bg-card rounded-lg border border-border">
-            <div className="grid grid-cols-[40px_80px_150px_1fr_120px_150px] gap-4 p-4 border-b border-border bg-muted/30">
-              <div></div>
-              <div className="text-sm font-medium text-muted-foreground">Country</div>
-              <div className="text-sm font-medium text-muted-foreground">Adoption score</div>
-              <div className="text-sm font-medium text-muted-foreground">Description</div>
-              <div className="text-sm font-medium text-muted-foreground">Sentiment</div>
-              <div className="text-sm font-medium text-muted-foreground">Recommendations</div>
-            </div>
-
-            {filteredResults.length === 0 ? (
-              <div className="p-8 text-center text-muted-foreground">
-                No results match your search criteria.
+          <div className="bg-card rounded-lg border border-border overflow-x-auto">
+            <div className="min-w-[900px]">
+              <div className="grid grid-cols-[40px_80px_150px_1fr_120px_150px] gap-4 p-4 border-b border-border bg-muted/30">
+                <div></div>
+                <div className="text-sm font-medium text-muted-foreground">Country</div>
+                <div className="text-sm font-medium text-muted-foreground">Adoption score</div>
+                <div className="text-sm font-medium text-muted-foreground">Description</div>
+                <div className="text-sm font-medium text-muted-foreground">Sentiment</div>
+                <div className="text-sm font-medium text-muted-foreground">Recommendations</div>
               </div>
-            ) : (
-              filteredResults.map((result, index) => {
-                const country = result.persona.origin_country
-                const flag = countryFlags[country] || "🌍"
-                const adoptionScore = result.feedback.adoption_score_0_100
-                const description = result.feedback.one_sentence_reaction
-                const sentiment = result.feedback.sentiment
-                const recommendations = result.feedback.recommendations_for_hr.slice(0, 2).join(", ")
 
-                return (
-                  <div
-                    key={result.persona.personaId}
-                    className="grid grid-cols-[40px_80px_150px_1fr_120px_150px] gap-4 p-4 border-b border-border last:border-b-0 hover:bg-muted/30 transition-colors"
-                  >
-                    <div className="flex items-center">
-                      <Checkbox
-                        checked={selectedCountries.has(country)}
-                        onCheckedChange={() => toggleCountrySelection(country)}
-                        className={
-                          selectedCountries.has(country)
-                            ? "border-primary data-[state=checked]:bg-primary"
-                            : ""
-                        }
-                      />
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xl">{flag}</span>
-                      <span className="text-sm">{country}</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <span className="text-sm font-medium">{adoptionScore}%</span>
-                      <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-orange-400 rounded-full"
-                          style={{ width: `${adoptionScore}%` }}
+              {filteredResults.length === 0 ? (
+                <div className="p-8 text-center text-muted-foreground">
+                  No results match your search criteria.
+                </div>
+              ) : (
+                filteredResults.map((result, index) => {
+                  const country = result.persona.origin_country
+                  const flag = countryFlags[country] || "🌍"
+                  const adoptionScore = result.feedback.adoption_score_0_100
+                  const description = result.feedback.one_sentence_reaction
+                  const sentiment = result.feedback.sentiment
+                  const recommendations = result.feedback.recommendations_for_hr.slice(0, 2).join(", ")
+
+                  return (
+                    <div
+                      key={result.persona.personaId}
+                      className="grid grid-cols-[40px_80px_150px_1fr_120px_150px] gap-4 p-4 border-b border-border last:border-b-0 hover:bg-muted/30 transition-colors"
+                    >
+                      <div className="flex items-center">
+                        <Checkbox
+                          checked={selectedCountries.has(country)}
+                          onCheckedChange={() => toggleCountrySelection(country)}
+                          className={
+                            selectedCountries.has(country)
+                              ? "border-primary data-[state=checked]:bg-primary"
+                              : ""
+                          }
                         />
                       </div>
+                      <div className="flex items-center gap-2 min-w-[140px]">
+                        <span className="text-xl">{flag}</span>
+                        <span className="text-sm whitespace-nowrap">{country}</span>
+                      </div>
+                      <div className="flex items-center gap-3 min-w-[160px]">
+                        <span className="text-sm font-medium whitespace-nowrap">{adoptionScore}%</span>
+                        <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-orange-400 rounded-full"
+                            style={{ width: `${adoptionScore}%` }}
+                          />
+                        </div>
+                      </div>
+                      <div className="flex items-center">
+                        <p className="text-sm text-muted-foreground line-clamp-1">{description}</p>
+                      </div>
+                      <div className="flex items-center">
+                        <span className="text-sm text-muted-foreground capitalize">{sentiment}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <span className="text-sm text-muted-foreground line-clamp-1">
+                          {recommendations}
+                        </span>
+                      </div>
                     </div>
-                    <div className="flex items-center">
-                      <p className="text-sm text-muted-foreground line-clamp-1">{description}</p>
-                    </div>
-                    <div className="flex items-center">
-                      <span className="text-sm text-muted-foreground capitalize">{sentiment}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <span className="text-sm text-muted-foreground line-clamp-1">{recommendations}</span>
-                    </div>
-                  </div>
-                )
-              })
-            )}
+                  )
+                })
+              )}
+            </div>
           </div>
 
           {filteredResults.length > 0 && (
