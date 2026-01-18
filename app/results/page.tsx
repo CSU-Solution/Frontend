@@ -172,10 +172,11 @@ export default function ResultsPage() {
                   const description = result.feedback.one_sentence_reaction
                   const sentiment = result.feedback.sentiment
                   const recommendations = result.feedback.recommendations_for_hr.slice(0, 2).join(", ")
+                  const uniqueKey = result.persona.personaId || `${country}-${index}`
 
                   return (
                     <div
-                      key={result.persona.personaId}
+                      key={uniqueKey}
                       className="grid grid-cols-[40px_80px_150px_1fr_120px_150px] gap-4 p-4 border-b border-border last:border-b-0 hover:bg-muted/30 transition-colors"
                     >
                       <div className="flex items-center">

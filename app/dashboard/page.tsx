@@ -153,7 +153,7 @@ export default function DashboardPage() {
                   <div className="flex gap-1 mt-2 flex-wrap max-w-[120px]">
                     {selectedResults.map((result, index) => (
                       <div
-                        key={result.persona.personaId}
+                        key={result.persona.personaId || `${result.persona.origin_country}-${index}`}
                         className="w-8 h-6 rounded-sm flex items-center justify-center text-lg"
                         title={result.persona.origin_country}
                       >
@@ -344,7 +344,7 @@ export default function DashboardPage() {
                       <div>
                         <h3 className="font-semibold mb-3">Motivations</h3>
                         <ul className="space-y-2 text-sm">
-                          {barData[hoveredBar].result.persona.motivations.slice(0, 3).map((mot, i) => (
+                        {(Array.isArray(barData[hoveredBar].result.persona.motivations) ? barData[hoveredBar].result.persona.motivations : []).slice(0, 3).map((mot, i) => (
                             <li key={i} className="flex items-start gap-2">
                               <span className="text-muted-foreground mt-1">•</span>
                               <span>{mot}</span>
@@ -358,7 +358,7 @@ export default function DashboardPage() {
                       <div>
                         <h3 className="font-semibold mb-3">Practical barriers</h3>
                         <ul className="space-y-2 text-sm">
-                          {barData[hoveredBar].result.feedback.practical_barriers.slice(0, 2).map((barrier, i) => (
+                        {(Array.isArray(barData[hoveredBar].result.feedback.practical_barriers) ? barData[hoveredBar].result.feedback.practical_barriers : []).slice(0, 2).map((barrier, i) => (
                             <li key={i} className="flex items-start gap-2">
                               <span className="text-muted-foreground mt-1">•</span>
                               <span>{barrier}</span>
